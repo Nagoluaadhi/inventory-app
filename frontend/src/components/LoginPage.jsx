@@ -24,7 +24,7 @@ export default function LoginPage({ setUser }) {
       localStorage.setItem('user_id', user.id);
       localStorage.setItem('role', user.role);
 
-      if (user.role === 'branch_office') {
+      if (user.role === 'branch-office') {
         localStorage.setItem('client_id', user.client_id); // optional
       }
 
