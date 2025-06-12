@@ -17,31 +17,31 @@ export default function AdminDashboard() {
 
 return (
   <>
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Item Balances */}
-      <div className="bg-white rounded-xl shadow p-6 w-full">
-        <h3 className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
-          📦 Item Balances
-        </h3>
+    <div className="w-full px-6">
+  {/* Item Balances */}
+  <div className="bg-white rounded-xl shadow p-6 w-full">
+    <h3 className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
+      📦 Item Balances
+    </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {itemSummary.map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-white min-w-[220px] min-h-[160px] border border-gray-200 rounded-xl p-4 text-center shadow"
-            >
-              <p className="text-lg font-bold text-gray-800">{item.item_name}</p>
-              <p className="text-sm text-green-600">Total Added: {item.total_added}</p>
-              <p className="text-sm text-red-600">Used: {item.used}</p>
-              <p className="text-sm text-blue-600">Remaining: {item.balance}</p>
-            </div>
-          ))}
+    {/* ✅ Horizontal Card Grid */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {itemSummary.map((item, idx) => (
+        <div
+          key={idx}
+          className="bg-white min-w-[220px] min-h-[160px] border border-gray-200 rounded-xl p-4 text-center shadow"
+        >
+          <p className="text-lg font-bold text-gray-800">{item.item_name}</p>
+          <p className="text-sm text-green-600">Total Added: {item.total_added}</p>
+          <p className="text-sm text-red-600">Used: {item.used}</p>
+          <p className="text-sm text-blue-600">Remaining: {item.balance}</p>
         </div>
-      </div>
+      ))}
     </div>
+  </div>
 
-    {/* Add spacing between sections */}
-    <div className="my-6"></div>
+  {/* Spacing */}
+  <div className="my-6"></div>
 
     {/* Client Balances */}
     <div className="bg-white rounded-xl shadow p-6">
