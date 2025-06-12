@@ -263,6 +263,12 @@ const deleteClient = async (id) => {
               <td className="border px-2 py-1">{inventory.qty}</td>
               <td className="border px-2 py-1">
                 <button
+            onClick={() => handleEdit(item)}
+            className="text-blue-600 mr-2 hover:underline"
+          >
+            Edit
+          </button>
+                <button
                   onClick={() => deleteInventory(inventory.id)}
                   className="bg-red-600 text-white px-2 py-1 text-xs rounded"
                 >
