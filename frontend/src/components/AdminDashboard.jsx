@@ -25,22 +25,27 @@ export default function AdminDashboard() {
           <h3 className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
             📦 Item Balances
           </h3>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {itemSummary.map((item, idx) => (
-  <div
-    key={idx}
-    className="border border-dashed rounded-lg p-4 text-center transition transform hover:scale-105 hover:shadow-md"
-  >
-    <p className="text-md font-bold text-gray-800">{item.item_name}</p>
-    <p className="text-sm text-gray-600">Total Added: {item.total_added}</p>
-    <p className="text-sm text-gray-600">Used: {item.used}</p>
-    <p className={`text-sm font-semibold ${item.balance < 0 ? 'text-red-600' : 'text-blue-600'}`}>
-      Remaining: {item.balance}
-    </p>
-  </div>
-))}
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {itemSummary.map((item, idx) => (
+    <div
+      key={idx}
+      className="bg-white border border-gray-200 rounded-xl p-6 shadow hover:shadow-lg transition"
+    >
+      <h4 className="text-lg font-bold text-gray-800 mb-2">{item.item_name}</h4>
+      <div className="text-sm space-y-1">
+        <p><span className="font-semibold text-gray-600">Total Added:</span> {item.total_added}</p>
+        <p><span className="font-semibold text-gray-600">Used:</span> {item.used}</p>
+        <p>
+          <span className="font-semibold text-gray-600">Remaining:</span>{' '}
+          <span className={`${item.balance < 0 ? 'text-red-600' : 'text-blue-600'} font-bold`}>
+            {item.balance}
+          </span>
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
 
-          </div>
         </div>
         {/* Client Balances */}
         <div className="bg-white rounded-xl shadow p-6">
