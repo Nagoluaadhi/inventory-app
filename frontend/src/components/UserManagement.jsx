@@ -6,7 +6,7 @@ export default function UserManagement() {
   const [users, setUsers] = useState([]);
   const [form, setForm] = useState({ username: '', password: '', role: '' });
   const user = JSON.parse(localStorage.getItem('user'));
-  const [inventoryForm, setInventoryForm] = useState({ item_name: '', remark: '' });
+  const [inventoryForm, setInventoryForm] = useState({ item_name: '', qty: '' });
   const [clientForm, setClientForm] = useState({ client_name: '', address: '', branch_user_id: user?.role === 'branch-office' ? user.id : '' });
   const [inventory, setInventory] = useState([]);
 
@@ -65,7 +65,7 @@ const loadInventory = async () => {
   const handleInventorySubmit = async (e) => {
     e.preventDefault();
     await axios.post('http://localhost:3001/api/inventory', inventoryForm);
-    setInventoryForm({ item_name: '', remark: '' });
+    setInventoryForm({ item_name: '', qty: '' });
     loadInventory();
   };
 
@@ -231,12 +231,13 @@ const deleteClient = async (id) => {
           className="p-2 border rounded"
         />
         <input
-          type="text"
-          placeholder="Remark"
-          value={inventoryForm.remark}
-          onChange={(e) => setInventoryForm({ ...inventoryForm, remark: e.target.value })}
-          className="p-2 border rounded"
-        />
+  type="number"
+  placeholder="Quantity"
+  value={inventoryForm.qty}
+  onChange={(e) => setInventoryForm({ ...inventoryForm, qty: e.target.value })}
+  className="p-2 border rounded"
+/>
+
         <div className="md:col-span-3 flex justify-left">
         <button
           type="submit"
@@ -250,7 +251,7 @@ const deleteClient = async (id) => {
           <tr>
             <th className="border px-2 py-1">ID</th>
             <th className="border px-2 py-1">Item Name</th>
-            <th className="border px-2 py-1">Remark</th>
+            <th className="border px-2 py-1">QTY</th>
             <th className="border px-2 py-1">Action</th>
           </tr>
         </thead>
@@ -259,7 +260,7 @@ const deleteClient = async (id) => {
             <tr key={inventory.id}>
               <td className="border px-2 py-1">{inventory.id}</td>
               <td className="border px-2 py-1">{inventory.item_name}</td>
-              <td className="border px-2 py-1">{inventory.remark}</td>
+              <td className="border px-2 py-1">{inventory.qty}</td>
               <td className="border px-2 py-1">
                 <button
                   onClick={() => deleteInventory(inventory.id)}
