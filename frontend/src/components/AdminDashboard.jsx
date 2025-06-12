@@ -31,10 +31,10 @@ export default function AdminDashboard() {
       key={idx}
       className="border border-dashed rounded-lg p-4 text-center transition transform hover:scale-105 hover:shadow-md"
     >
-      <p className="text-md font-bold text-gray-800">{item.item_name}</p>
-      <p className="text-sm text-green-600">Total Added: {item.total_added}</p>
-      <p className="text-sm text-red-600">Used: {item.used}</p>
-      <p className={`text-sm font-semibold ${item.balance < 0 ? 'text-red-600' : 'text-blue-600'}`}>
+      <p className="text-md font-bold text-gray-600">{item.item_name}</p>
+      <p className="text-sm text-green-400">Total Added: {item.total_added}</p>
+      <p className="text-sm text-red-400">Used: {item.used}</p>
+      <p className={`text-sm font-semibold ${item.balance < 0 ? 'text-red-400' : 'text-blue-400'}`}>
         Remaining: {item.balance}
       </p>
     </div>
