@@ -283,7 +283,7 @@ export default function UserManagement() {
 
       {/* Client Form */}
       <h3 className="text-md font-semibold mt-6 mb-2">Create Client</h3>
-<form onSubmit={handleClientSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<form onSubmit={handleClientSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 items-center">
   {user?.role === 'admin' && (
     <select
       value={clientForm.branch_user_id}
@@ -298,6 +298,7 @@ export default function UserManagement() {
         ))}
     </select>
   )}
+
   <input
     type="text"
     placeholder="Client Name"
@@ -305,16 +306,14 @@ export default function UserManagement() {
     onChange={(e) => setClientForm({ ...clientForm, client_name: e.target.value })}
     className="p-2 border rounded"
   />
-  <div className="md:col-span-3">
-    <button
-      type="submit"
-      className="bg-blue-600 text-white px-6 py-2 rounded w-auto"
-    >
-      Add Client
-    </button>
-  </div>
-</form>
 
+  <button
+    type="submit"
+    className="bg-blue-600 text-white px-6 py-2 rounded w-full md:w-auto"
+  >
+    Add Client
+  </button>
+</form>
       {/* Client Table */}
       <h3 className="text-md font-semibold mb-2">Existing Clients</h3>
       <table className="w-full text-sm border">
