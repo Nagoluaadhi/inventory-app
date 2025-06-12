@@ -10,7 +10,7 @@ export default function UserManagement() {
   const [form, setForm] = useState({ username: '', password: '', role: '' });
   const user = JSON.parse(localStorage.getItem('user'));
   const [inventoryForm, setInventoryForm] = useState({ item_name: '', qty: '' });
-  const [clientForm, setClientForm] = useState({ client_name: '', address: '', branch_user_id: user?.role === 'branch-office' ? user.id : '' });
+  const [clientForm, setClientForm] = useState({ client_name: '', branch_user_id: user?.role === 'branch-office' ? user.id : '' });
   const [inventory, setInventory] = useState([]);
   const [clients, setClients] = useState([]);
 
@@ -293,7 +293,6 @@ export default function UserManagement() {
           </select>
         )}
         <input type="text" placeholder="Client Name" value={clientForm.client_name} onChange={(e) => setClientForm({ ...clientForm, client_name: e.target.value })} className="p-2 border rounded" />
-        <input type="text" placeholder="Address" value={clientForm.address} onChange={(e) => setClientForm({ ...clientForm, address: e.target.value })} className="p-2 border rounded" />
         <div className="md:col-span-2">
           <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded w-auto">Add Client</button>
         </div>
@@ -306,7 +305,6 @@ export default function UserManagement() {
           <tr>
             <th>ID</th>
             <th>Client Name</th>
-            <th>Address</th>
             <th>Assigned Branch</th>
             <th>Action</th>
           </tr>
@@ -318,7 +316,6 @@ export default function UserManagement() {
               <tr key={client.id}>
                 <td>{client.id}</td>
                 <td>{client.client_name}</td>
-                <td>{client.address}</td>
                 <td>{assignedUser?.username || '—'}</td>
                 <td>
                   <button onClick={() => deleteClient(client.id)} className="bg-red-600 text-white px-2 py-1 text-xs rounded">Delete</button>
