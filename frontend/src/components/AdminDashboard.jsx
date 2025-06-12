@@ -28,9 +28,9 @@ export default function AdminDashboard() {
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
   {itemSummary.map((item, idx) => (
     <div
-      key={idx}
-      className="border border-dashed rounded-lg p-4 text-center transition transform hover:scale-105 hover:shadow-md"
-    >
+  key={idx}
+  className="min-w-[200px] min-h-[160px] border border-dashed rounded-xl p-4 text-center shadow bg-white transition transform hover:scale-105 hover:shadow-lg"
+>
       <p className="text-md font-bold text-gray-800">{item.item_name}</p>
       <p className="text-xs text-green-600">Total Added: {item.total_added}</p>
       <p className="text-xs text-red-600">Used: {item.used}</p>
