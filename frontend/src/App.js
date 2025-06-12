@@ -38,7 +38,7 @@ function App() {
   <Route path="dashboard" element={
     user?.role === 'admin' ? <AdminDashboard /> :
     user?.role === 'user' ? <UserDashboard /> :
-    user?.role === 'branch_office' ? <BranchDashboard /> :
+    user?.role === 'branch-office' ? <BranchDashboard /> :
     <div>Unauthorized</div>
   } />
 
@@ -60,7 +60,7 @@ function App() {
     </>
   )}
 
-  {user?.role === 'branch_office' && (
+  {user?.role === 'branch-office' && (
     <>
       <Route path="stockout" element={<Stockout />} />
       <Route path="services" element={<Services />} />
