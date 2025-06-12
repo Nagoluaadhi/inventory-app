@@ -19,7 +19,7 @@ export default function AdminDashboard() {
     <div className="p-6 bg-gray-50 min-h-screen">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Admin Dashboard</h2>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6">
         {/* Item Balances */}
         <div className="bg-white rounded-xl shadow p-6">
           <h3 className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
