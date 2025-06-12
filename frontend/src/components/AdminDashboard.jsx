@@ -25,11 +25,11 @@ export default function AdminDashboard() {
           <h3 className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
             📦 Item Balances
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
   {itemSummary.map((item, idx) => (
     <div
       key={idx}
-      className="bg-white border border-gray-200 rounded-lg p-6 shadow text-center space-y-1"
+      className="border border-dashed rounded-lg p-4 text-center transition transform hover:scale-105 hover:shadow-md"
     >
       <p className="text-md font-bold text-gray-800">{item.item_name}</p>
       <p className="text-sm text-gray-600">Total Added: {item.total_added}</p>
