@@ -25,18 +25,16 @@ export default function AdminDashboard() {
           <h3 className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
             📦 Item Balances
           </h3>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
   {itemSummary.map((item, idx) => (
     <div
-  key={idx}
-  className="min-w-[200px] min-h-[160px] border border-dashed rounded-xl p-4 text-center shadow bg-white transition transform hover:scale-105 hover:shadow-lg"
->
-      <p className="text-md font-bold text-gray-800">{item.item_name}</p>
-      <p className="text-xs text-green-600">Total Added: {item.total_added}</p>
-      <p className="text-xs text-red-600">Used: {item.used}</p>
-      <p className={`text-xs font-semibold ${item.balance < 0 ? 'text-red-600' : 'text-blue-600'}`}>
-        Remaining: {item.balance}
-      </p>
+      key={idx}
+      className="min-w-[220px] min-h-[160px] border border-gray-200 rounded-2xl p-4 text-center shadow-md bg-white"
+    >
+      <p className="text-lg font-bold text-gray-800">{item.item_name}</p>
+      <p className="text-sm text-green-600">Total Added: {item.total_added}</p>
+      <p className="text-sm text-red-600">Used: {item.used}</p>
+      <p className="text-sm text-blue-600">Remaining: {item.balance}</p>
     </div>
   ))}
 </div>
