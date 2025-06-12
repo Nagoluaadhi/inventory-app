@@ -283,20 +283,37 @@ export default function UserManagement() {
 
       {/* Client Form */}
       <h3 className="text-md font-semibold mt-6 mb-2">Create Client</h3>
-      <form onSubmit={handleClientSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        {user?.role === 'admin' && (
-          <select value={clientForm.branch_user_id} onChange={(e) => setClientForm({ ...clientForm, branch_user_id: e.target.value })} className="p-2 border rounded">
-            <option value="">Assign Branch Office</option>
-            {allUsers.filter(u => u.role === 'branch-office').map(u => (
-              <option key={u.id} value={u.id}>{u.username}</option>
-            ))}
-          </select>
-        )}
-        <input type="text" placeholder="Client Name" value={clientForm.client_name} onChange={(e) => setClientForm({ ...clientForm, client_name: e.target.value })} className="p-2 border rounded" />
-        <div className="md:col-span-2">
-          <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded w-auto">Add Client</button>
-        </div>
-      </form>
+<form onSubmit={handleClientSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+  {user?.role === 'admin' && (
+    <select
+      value={clientForm.branch_user_id}
+      onChange={(e) => setClientForm({ ...clientForm, branch_user_id: e.target.value })}
+      className="p-2 border rounded"
+    >
+      <option value="">Assign Branch Office</option>
+      {allUsers
+        .filter(u => u.role === 'branch-office')
+        .map(u => (
+          <option key={u.id} value={u.id}>{u.username}</option>
+        ))}
+    </select>
+  )}
+  <input
+    type="text"
+    placeholder="Client Name"
+    value={clientForm.client_name}
+    onChange={(e) => setClientForm({ ...clientForm, client_name: e.target.value })}
+    className="p-2 border rounded"
+  />
+  <div className="md:col-span-3">
+    <button
+      type="submit"
+      className="bg-blue-600 text-white px-6 py-2 rounded w-auto"
+    >
+      Add Client
+    </button>
+  </div>
+</form>
 
       {/* Client Table */}
       <h3 className="text-md font-semibold mb-2">Existing Clients</h3>
