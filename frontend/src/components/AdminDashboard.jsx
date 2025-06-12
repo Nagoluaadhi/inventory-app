@@ -27,16 +27,19 @@ export default function AdminDashboard() {
           </h3>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
             {itemSummary.map((item, idx) => (
-              <div
-                key={idx}
-                className="border border-dashed rounded-lg p-4 text-center transition transform hover:scale-105 hover:shadow-md"
-              >
-                <p className="text-md font-medium text-gray-800">{item.item_name}</p>
-                <p className={`text-sm font-semibold ${item.balance < 0 ? 'text-red-600' : 'text-blue-600'}`}>
-                  {item.balance} available
-                </p>
-              </div>
-            ))}
+  <div
+    key={idx}
+    className="border border-dashed rounded-lg p-4 text-center transition transform hover:scale-105 hover:shadow-md"
+  >
+    <p className="text-md font-bold text-gray-800">{item.item_name}</p>
+    <p className="text-sm text-gray-600">Total Added: {item.total_added}</p>
+    <p className="text-sm text-gray-600">Used: {item.used}</p>
+    <p className={`text-sm font-semibold ${item.balance < 0 ? 'text-red-600' : 'text-blue-600'}`}>
+      Remaining: {item.balance}
+    </p>
+  </div>
+))}
+
           </div>
         </div>
         {/* Client Balances */}
