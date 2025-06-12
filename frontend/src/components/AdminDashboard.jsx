@@ -25,18 +25,21 @@ export default function AdminDashboard() {
   <h3 className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
     📦 Item Balances
   </h3>
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-  {itemSummary.map((item, idx) => (
-    <div
-      key={idx}
-      className="min-w-[220px] min-h-[160px] bg-white border border-gray-300 rounded-xl p-4 shadow text-center"
-    >
-      <p className="text-lg font-bold text-gray-800">{item.item_name}</p>
-      <p className="text-sm text-green-600">Total Added: {item.total_added}</p>
-      <p className="text-sm text-red-600">Used: {item.used}</p>
-      <p className="text-sm text-blue-600">Remaining: {item.balance}</p>
-    </div>
-  ))}
+
+  {/* ✅ Grid Wrapper for cards */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {itemSummary.map((item, idx) => (
+      <div
+        key={idx}
+        className="bg-white min-w-[220px] min-h-[160px] border border-gray-200 rounded-xl p-4 text-center shadow"
+      >
+        <p className="text-lg font-bold text-gray-800">{item.item_name}</p>
+        <p className="text-sm text-green-600">Total Added: {item.total_added}</p>
+        <p className="text-sm text-red-600">Used: {item.used}</p>
+        <p className="text-sm text-blue-600">Remaining: {item.balance}</p>
+      </div>
+    ))}
+  </div>
 </div>
         </div>
         <br></br>
