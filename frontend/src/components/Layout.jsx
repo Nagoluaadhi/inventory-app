@@ -18,7 +18,7 @@ function Layout({ user }) {
     </>
   )}
 
-  {user?.role === 'branch_office' && (
+  {user?.role === 'branch-office' && (
     <>
       <Link to="/app/stockout" className="hover:text-orange-500">Outward</Link>
       <Link to="/app/services" className="hover:text-orange-500">Services</Link>
