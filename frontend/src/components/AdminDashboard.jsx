@@ -38,8 +38,8 @@ export default function AdminDashboard() {
     </div>
   ))}
 </div>
-
         </div>
+        <br></br>
         {/* Client Balances */}
         <div className="bg-white rounded-xl shadow p-6">
           <h3 className="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
