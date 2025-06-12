@@ -176,7 +176,7 @@ export default function UserManagement() {
       {/* Create User Form */}
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <input type="text" placeholder="Username" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} className="p-2 border rounded" />
-        <input type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="p-2 border rounded" />
+        <input type="text" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="p-2 border rounded" />
         <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="p-2 border rounded">
           <option value="">Select Role</option>
           <option value="admin">Admin</option>
@@ -195,6 +195,7 @@ export default function UserManagement() {
           <tr>
             <th className="border px-2 py-1">ID</th>
             <th className="border px-2 py-1">Username</th>
+            <th className="border px-2 py-1">Password</th>
             <th className="border px-2 py-1">Role</th>
             <th className="border px-2 py-1">Action</th>
           </tr>
@@ -204,6 +205,7 @@ export default function UserManagement() {
             <tr key={user.id}>
               <td className="border px-2 py-1">{user.id}</td>
               <td className="border px-2 py-1">{user.username}</td>
+              <td className="border px-2 py-1">{user.password}</td>
               <td className="border px-2 py-1">{user.role}</td>
               <td className="border px-2 py-1">
                 <button onClick={() => deleteUser(user.id)} className="bg-red-600 text-white px-2 py-1 text-xs rounded">Delete</button>
