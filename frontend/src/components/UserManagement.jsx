@@ -256,13 +256,21 @@ export default function UserManagement() {
                   <td className="border px-2 py-1">{item.item_name}</td>
                   <td className="border px-2 py-1">{item.qty}</td>
                   <td className="border px-2 py-1">
-                    <button
-  onClick={() => handleEditClick(item)}
-  className="bg-yellow-500 text-white px-2 py-1 text-xs rounded mr-2 flex items-center gap-1"
->
-  ✏️ Edit
-</button>
-                    <button onClick={() => deleteInventory(item.id)} className="bg-red-600 text-white px-2 py-1 text-xs rounded">Delete</button>
+                    <div className="flex flex-col md:flex-row gap-2">
+  <button
+    onClick={() => handleEditClick(item)}
+    className="flex items-center gap-1 bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-3 py-1 rounded shadow transition duration-200"
+  >
+    ✏️ Edit
+  </button>
+  <button
+    onClick={() => deleteInventory(item.id)}
+    className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1 rounded shadow transition duration-200"
+  >
+    🗑️ Delete
+  </button>
+</div>
+
                   </td>
                 </>
               )}
