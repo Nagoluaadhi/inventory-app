@@ -318,28 +318,36 @@ export default function UserManagement() {
       <h3 className="text-md font-semibold mb-2">Existing Clients</h3>
       <table className="w-full text-sm border">
         <thead className="bg-gray-100">
-          <tr>
-            <th>ID</th>
-            <th>Client Name</th>
-            <th>Assigned Branch</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+  <tr>
+    <th className="border px-2 py-1">ID</th>
+    <th className="border px-2 py-1">Client Name</th>
+    <th className="border px-2 py-1">Assigned Branch</th>
+    <th className="border px-2 py-1">Action</th>
+  </tr>
+</thead>
         <tbody>
-          {clients.map(client => {
-            const assignedUser = allUsers.find(u => u.id === client.branch_user_id);
-            return (
-              <tr key={client.id}>
-                <td>{client.id}</td>
-                <td>{client.client_name}</td>
-                <td>{assignedUser?.username || '—'}</td>
-                <td>
-                  <button onClick={() => deleteClient(client.id)} className="bg-red-600 text-white px-2 py-1 text-xs rounded">Delete</button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
+  {clients.map(client => {
+    const assignedUser = allUsers.find(u => u.id === client.branch_user_id);
+    return (
+      <tr key={client.id}>
+        <td className="border px-2 py-1">{client.id}</td>
+        <td className="border px-2 py-1">{client.client_name}</td>
+        <td className="border px-2 py-1">{assignedUser?.username || '—'}</td>
+        <td className="border px-2 py-1">
+          <div className="flex justify-start">
+            <button
+              onClick={() => deleteClient(client.id)}
+              className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1 text-xs rounded shadow transition duration-200"
+            >
+              🗑️ Delete
+            </button>
+          </div>
+        </td>
+      </tr>
+    );
+  })}
+</tbody>
+
       </table>
     </div>
   );
