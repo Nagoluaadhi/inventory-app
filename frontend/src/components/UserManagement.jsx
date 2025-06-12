@@ -256,7 +256,12 @@ export default function UserManagement() {
                   <td className="border px-2 py-1">{item.item_name}</td>
                   <td className="border px-2 py-1">{item.qty}</td>
                   <td className="border px-2 py-1">
-                    <button onClick={() => handleEditClick(item)} className="text-blue-600 mr-2 hover:underline">Edit</button>
+                    <button
+  onClick={() => handleEditClick(item)}
+  className="bg-yellow-500 text-white px-2 py-1 text-xs rounded mr-2 flex items-center gap-1"
+>
+  ✏️ Edit
+</button>
                     <button onClick={() => deleteInventory(item.id)} className="bg-red-600 text-white px-2 py-1 text-xs rounded">Delete</button>
                   </td>
                 </>
