@@ -7,7 +7,7 @@ export default function UserManagement() {
   const [form, setForm] = useState({ username: '', password: '', role: '' });
   const user = JSON.parse(localStorage.getItem('user'));
   const [inventoryForm, setInventoryForm] = useState({ item_name: '', remark: '' });
-  const [clientForm, setClientForm] = useState({ client_name: '', address: '', branch_user_id: user?.role === 'branch_office' ? user.id : '' });
+  const [clientForm, setClientForm] = useState({ client_name: '', address: '', branch_user_id: user?.role === 'branch-office' ? user.id : '' });
   const [inventory, setInventory] = useState([]);
 
 const loadInventory = async () => {
@@ -185,7 +185,7 @@ const deleteClient = async (id) => {
           <option value="">Select Role</option>
           <option value="admin">Admin</option>
           <option value="user">User</option>
-          <option value="branch_office">Branch Office</option>
+          <option value="branch-office">Branch Office</option>
         </select>
         <div className="md:col-span-3 flex justify-left">
         <button
@@ -283,7 +283,7 @@ const deleteClient = async (id) => {
   >
     <option value="">Assign Branch Office</option>
     {allUsers
-      .filter(u => u.role === 'branch_office')
+      .filter(u => u.role === 'branch-office')
       .map(u => (
         <option key={u.id} value={u.id}>{u.username}</option>
       ))}
