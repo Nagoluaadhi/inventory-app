@@ -33,6 +33,7 @@ function Layout({ user }) {
       <Link to="/app/dashboard" className="hover:text-orange-500">Dashboard</Link>
       <Link to="/app/stockin" className="hover:text-orange-500">Stock IN</Link>
       <Link to="/app/stockout" className="hover:text-orange-500">Outward</Link>
+      <Link to="/app/expensive" className="hover:text-orange-500">Expensive</Link>
       <Link to="/app/services" className="hover:text-orange-500">Services</Link>
     </>
   )}
