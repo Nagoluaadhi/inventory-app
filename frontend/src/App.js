@@ -59,7 +59,7 @@ function App() {
     <>
       <Route path="stockin" element={<StockIn />} />
       <Route path="stockout" element={<Stockout />} />
-      <Route path="/expensive" element={<Expensive />} />
+      <Route path="expensive" element={<Expensive />} />
       <Route path="services" element={<Services />} />
     </>
   )}
