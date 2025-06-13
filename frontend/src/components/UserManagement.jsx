@@ -26,7 +26,7 @@ export default function UserManagement() {
   };
 
   const loadClients = async () => {
-  console.log('📤 Sending /api/clients with:', { userId: user?.id, role: user?.role });
+  console.log('📤 Sending /api/clients with:', JSON.stringify({ userId: user?.id, role: user?.role }));
   const res = await axios.get('http://localhost:3001/api/clients', {
     params: {
       userId: user?.id,
