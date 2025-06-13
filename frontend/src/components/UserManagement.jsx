@@ -10,7 +10,7 @@ export default function UserManagement() {
   const [form, setForm] = useState({ username: '', password: '', role: '' });
   const user = JSON.parse(localStorage.getItem('user'));
   const [inventoryForm, setInventoryForm] = useState({ item_name: '', qty: '' });
-  const [clientForm, setClientForm] = useState({ client_name: '', branch_user_id: user?.role === 'branch-office' ? user.id : '' });
+  const [clientForm, setClientForm] = useState({ client_name: '', branch_user_id: user?.role === 'user' ? user.id : '' });
   const [inventory, setInventory] = useState([]);
   const [clients, setClients] = useState([]);
 
@@ -180,8 +180,8 @@ export default function UserManagement() {
         <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="p-2 border rounded">
           <option value="">Select Role</option>
           <option value="admin">Admin</option>
+          <option value="engineer">Engineer</option>
           <option value="user">User</option>
-          <option value="branch-office">Branch Office</option>
         </select>
         <div className="md:col-span-3">
           <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded w-auto">Create User</button>
@@ -290,9 +290,9 @@ export default function UserManagement() {
       onChange={(e) => setClientForm({ ...clientForm, branch_user_id: e.target.value })}
       className="p-2 border rounded"
     >
-      <option value="">Assign Branch Office</option>
+      <option value="">Assign User</option>
       {allUsers
-        .filter(u => u.role === 'branch-office')
+        .filter(u => u.role === 'user')
         .map(u => (
           <option key={u.id} value={u.id}>{u.username}</option>
         ))}
