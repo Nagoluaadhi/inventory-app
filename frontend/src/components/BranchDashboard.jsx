@@ -15,7 +15,7 @@ useEffect(() => {
   }
 
   // ✅ Fetch stockin/stockout
-  axios.get(`/api/dashboard/branch-dashboard-role/${user.id}`)
+  axios.get(`http://localhost:3001/api/dashboard/branch-dashboard-role/${user.id}`)
     .then(res => {
       const data = res.data || {};
       console.log("✅ Received stockinFromAdmin:", data.stockinFromAdmin);
@@ -26,7 +26,7 @@ useEffect(() => {
   // ✅ Fetch assigned clients for 'user'
   if (user.role === 'user') {
     console.log('📦 Sending to /api/clients', { userId: user.id, role: user.role });
-    axios.get('/api/clients', {
+    axios.get('http://localhost:3001/api/clients', {
       params: { userId: user.id, role: user.role }
     })
     .then(res => {
