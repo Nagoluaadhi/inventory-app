@@ -3,112 +3,159 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function BranchDashboard() {
-  const [stockinFromAdmin, setStockinFromAdmin] = useState([]);
-  const [stockoutFromUser, setStockoutFromUser] = useState([]);
-  const [clients, setClients] = useState([]);
-  const user = JSON.parse(localStorage.getItem('user'));
+  const [itemBalances, setItemBalances] = useState([]);
+  const [totalIn, setTotalIn] = useState(0);
+  const [totalOut, setTotalOut] = useState(0);
+  const [totalBalance, setTotalBalance] = useState(0);
+  const [stockinFromAdmin, setStockinFromAdmin] = useState([]);
+  const [stockoutFromUser, setStockoutFromUser] = useState([]);
+  const [clients, setClients] = useState([]);
+  const user = JSON.parse(localStorage.getItem('user'));
 
-useEffect(() => {
-  if (!user || !user.id || !user.role) {
-    console.warn('🚫 No user found in localStorage');
-    return;
-  }
+  useEffect(() => {
+    if (!user || !user.id || !user.role) {
+      console.warn('🚫 No user found in localStorage');
+      return;
+    }
 
-  // ✅ Fetch stockin/stockout
-  axios.get(`http://localhost:3001/api/dashboard/branch-dashboard-role/${user.id}`)
-    .then(res => {
-      const data = res.data || {};
-      console.log("✅ Received stockinFromAdmin:", data.stockinFromAdmin);
-      setStockinFromAdmin(Array.isArray(data.stockinFromAdmin) ? data.stockinFromAdmin : []);
-      setStockoutFromUser(Array.isArray(data.stockoutFromUser) ? data.stockoutFromUser : []);
-    });
+    axios.get(`http://localhost:3001/api/dashboard/branch-dashboard-role/${user.id}`)
+      .then(res => {
+        const data = res.data || {};
+        setStockinFromAdmin(Array.isArray(data.stockinFromAdmin) ? data.stockinFromAdmin : []);
+        setStockoutFromUser(Array.isArray(data.stockoutFromUser) ? data.stockoutFromUser : []);
 
-  // ✅ Fetch assigned clients for 'user'
-  if (user.role === 'user') {
-    console.log('📦 Sending to /api/clients', { userId: user.id, role: user.role });
-    axios.get('http://localhost:3001/api/clients', {
-      params: { userId: user.id, role: user.role }
-    })
-    .then(res => {
-      console.log("✅ Received clients:", res.data);
-      setClients(Array.isArray(res.data) ? res.data : []);
-    })
-    .catch(err => {
-      console.error('❌ Error fetching clients:', err);
-    });
-  }
-}, []);
+        const balances = data.itemBalances || [];
+        setItemBalances(balances);
 
-  return (
-  <div>
-    <h2 className="text-xl font-bold mb-4">Branch Office Dashboard</h2>
+        const totalIn = balances.reduce((sum, item) => sum + item.stockin_from_admin, 0);
+        const totalOut = balances.reduce((sum, item) => sum + item.stockout_by_engineer, 0);
+        setTotalIn(totalIn);
+        setTotalOut(totalOut);
+        setTotalBalance(totalIn - totalOut);
+      })
+      .catch(err => {
+        console.error('❌ Error fetching branch dashboard:', err);
+      });
 
-    {/* ✅ Assigned Clients Section */}
-    <div className="mb-6 bg-white p-4 rounded shadow">
-      <h3 className="text-lg font-semibold text-blue-700 mb-2">👥 Assigned Clients</h3>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {Array.isArray(clients) && clients.map((client) => (
-  <div key={client.id} className="border rounded p-3 shadow text-center">
-    <p className="text-md font-medium">{client.client_name}</p>
-    <p className="text-sm text-gray-500">Client ID: {client.id}</p> {/* Or any other valid field */}
-  </div>
-))}
-      </div>
-    </div>
+    if (user.role === 'user') {
+      axios.get('http://localhost:3001/api/clients', {
+        params: { userId: user.id, role: user.role }
+      })
+        .then(res => {
+          setClients(Array.isArray(res.data) ? res.data : []);
+        })
+        .catch(err => {
+          console.error('❌ Error fetching clients:', err);
+        });
+    }
+  }, []);
 
-    {/* 🟩 StockIn from Admin */}
-    <div className="mb-6">
-      <h3 className="text-lg font-semibold text-green-700 mb-2">📦 Items Sent by Admin (Outward)</h3>
-      <table className="w-full border text-sm mb-4">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="border px-2">Date</th>
-            <th className="border px-2">Item</th>
-            <th className="border px-2">Client</th>
-            <th className="border px-2">Qty</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stockinFromAdmin.map((row, i) => (
-            <tr key={i}>
-              <td className="border px-2">
-                {new Date(row.date).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
-              </td>
-              <td className="border px-2">{row.item_name}</td>
-              <td className="border px-2">{row.client_name}</td>
-              <td className="border px-2 text-green-700">{row.qty}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+  return (
+    <div>
+      <h2 className="text-xl font-bold mb-4">Branch Office Dashboard</h2>
 
-    {/* 🟥 StockOut from User */}
-    <div>
-      <h3 className="text-lg font-semibold text-red-700 mb-2">🟥 StockOut from User</h3>
-      <table className="w-full border text-sm">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="border px-2">Date</th>
-            <th className="border px-2">Item</th>
-            <th className="border px-2">Client</th>
-            <th className="border px-2">Qty</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stockoutFromUser.map((row, i) => (
-            <tr key={i}>
-              <td className="border px-2">
-                {new Date(row.date).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
-              </td>
-              <td className="border px-2">{row.item_name}</td>
-              <td className="border px-2">{row.client_name}</td>
-              <td className="border px-2 text-red-700">{row.qty}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-);
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="bg-white p-4 shadow rounded">
+          <h3 className="text-lg font-semibold text-gray-700">🟩 StockIn from Admin</h3>
+          <p className="text-2xl text-green-600">{totalIn}</p>
+        </div>
+        <div className="bg-white p-4 shadow rounded">
+          <h3 className="text-lg font-semibold text-gray-700">🟥 StockOut by Engineer</h3>
+          <p className="text-2xl text-red-600">{totalOut}</p>
+        </div>
+        <div className="bg-white p-4 shadow rounded">
+          <h3 className="text-lg font-semibold text-gray-700">📦 Remaining Balance</h3>
+          <p className="text-2xl text-indigo-600">{totalBalance}</p>
+        </div>
+      </div>
+
+      <h3 className="text-lg font-semibold mb-2">🧾 Item-wise Stock Summary</h3>
+      <table className="w-full border text-sm mb-6">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="border px-2">Item</th>
+            <th className="border px-2">Client</th>
+            <th className="border px-2">Admin StockIn</th>
+            <th className="border px-2">Engineer StockOut</th>
+            <th className="border px-2">Remaining</th>
+          </tr>
+        </thead>
+        <tbody>
+          {itemBalances.map((row, i) => (
+            <tr key={i}>
+              <td className="border px-2">{row.item_name}</td>
+              <td className="border px-2">{row.client_name}</td>
+              <td className="border px-2">{row.stockin_from_admin}</td>
+              <td className="border px-2">{row.stockout_by_engineer}</td>
+              <td className="border px-2">{row.balance}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="mb-6 bg-white p-4 rounded shadow">
+        <h3 className="text-lg font-semibold text-blue-700 mb-2">👥 Assigned Clients</h3>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {Array.isArray(clients) && clients.map((client) => (
+            <div key={client.id} className="border rounded p-3 shadow text-center">
+              <p className="text-md font-medium">{client.client_name}</p>
+              <p className="text-sm text-gray-500">Client ID: {client.id}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold text-green-700 mb-2">📦 Items Sent by Admin (Outward)</h3>
+        <table className="w-full border text-sm mb-4">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="border px-2">Date</th>
+              <th className="border px-2">Item</th>
+              <th className="border px-2">Client</th>
+              <th className="border px-2">Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stockinFromAdmin.map((row, i) => (
+              <tr key={i}>
+                <td className="border px-2">
+                  {new Date(row.date).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
+                </td>
+                <td className="border px-2">{row.item_name}</td>
+                <td className="border px-2">{row.client_name}</td>
+                <td className="border px-2 text-green-700">{row.qty}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <h3 className="text-lg font-semibold text-red-700 mb-2">🟥 StockOut from User</h3>
+        <table className="w-full border text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="border px-2">Date</th>
+              <th className="border px-2">Item</th>
+              <th className="border px-2">Client</th>
+              <th className="border px-2">Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stockoutFromUser.map((row, i) => (
+              <tr key={i}>
+                <td className="border px-2">
+                  {new Date(row.date).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
+                </td>
+                <td className="border px-2">{row.item_name}</td>
+                <td className="border px-2">{row.client_name}</td>
+                <td className="border px-2 text-red-700">{row.qty}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
