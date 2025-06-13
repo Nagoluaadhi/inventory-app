@@ -31,7 +31,7 @@ export default function StockIn() {
       const [invRes, cliRes, stockRes] = await Promise.all([
         axios.get('http://localhost:3001/api/inventory'),
         axios.get('http://localhost:3001/api/clients'),
-        axios.get('http://localhost:3001/api/stockin')
+        axios.get(`http://localhost:3001/api/stockin/${userRole}/${user.id}`)
       ]);
       setInventory(invRes.data);
       setClients(cliRes.data);
