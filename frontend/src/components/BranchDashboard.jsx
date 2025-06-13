@@ -54,20 +54,21 @@ export default function BranchDashboard() {
     <div>
       <h2 className="text-xl font-bold mb-4">Branch Office Dashboard</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="bg-white p-4 shadow rounded">
-          <h3 className="text-lg font-semibold text-gray-700">🟩 StockIn from Admin</h3>
-          <p className="text-2xl text-green-600">{totalIn}</p>
-        </div>
-        <div className="bg-white p-4 shadow rounded">
-          <h3 className="text-lg font-semibold text-gray-700">🟥 StockOut by Engineer</h3>
-          <p className="text-2xl text-red-600">{totalOut}</p>
-        </div>
-        <div className="bg-white p-4 shadow rounded">
-          <h3 className="text-lg font-semibold text-gray-700">📦 Remaining Balance</h3>
-          <p className="text-2xl text-indigo-600">{totalBalance}</p>
-        </div>
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+  <div className="bg-white p-4 rounded shadow flex flex-col items-center">
+    <span className="text-sm text-gray-500">🟩 StockIn from Admin</span>
+    <p className="text-3xl font-bold text-green-600 mt-1">{Number(totalIn)}</p>
+  </div>
+  <div className="bg-white p-4 rounded shadow flex flex-col items-center">
+    <span className="text-sm text-gray-500">🟥 StockOut by Engineer</span>
+    <p className="text-3xl font-bold text-red-600 mt-1">{Number(totalOut)}</p>
+  </div>
+  <div className="bg-white p-4 rounded shadow flex flex-col items-center">
+    <span className="text-sm text-gray-500">📦 Remaining Balance</span>
+    <p className="text-3xl font-bold text-indigo-600 mt-1">{Number(totalBalance)}</p>
+  </div>
+</div>
+
 
       <h3 className="text-lg font-semibold mb-2">🧾 Item-wise Stock Summary</h3>
       <table className="w-full border text-sm mb-6">
