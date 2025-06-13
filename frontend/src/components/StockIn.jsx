@@ -89,7 +89,8 @@ export default function StockIn() {
           invoice_no: form.invoice_no,
           qty: 1,
           remark: form.remark,
-          user_id: Number(user.id)
+          user_id: Number(user.id),
+          role: user.role
         };
         console.log('Submitting:', payload);
         await axios.post('http://localhost:3001/api/stockin', payload);
