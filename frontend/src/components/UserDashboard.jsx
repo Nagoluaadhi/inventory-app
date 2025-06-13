@@ -8,9 +8,9 @@ export default function UserDashboard() {
 
   useEffect(() => {
     axios.get(`/api/stockout?role=user&username=${user.username}`)
-      .then(res => setStockouts(res.data));
+      .then(res => setStockouts(Array.isArray(res.data) ? res.data : []));
     axios.get(`/api/services?role=user&username=${user.username}`)
-      .then(res => setServices(res.data));
+      .then(res => setServices(Array.isArray(res.data) ? res.data : []));
   }, []);
 
   return (
@@ -28,7 +28,7 @@ export default function UserDashboard() {
           </tr>
         </thead>
         <tbody>
-          {stockouts.map((s, i) => (
+          {Array.isArray(stockouts) && stockouts.map((s, i) => (
             <tr key={i}>
               <td className="border px-2">
   {new Date(s.date).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
@@ -53,7 +53,7 @@ export default function UserDashboard() {
           </tr>
         </thead>
         <tbody>
-          {services.map((svc, i) => (
+          {Array.isArray(services) && services.map((svc, i) => (
             <tr key={i}>
               <td className="border px-2">
   {new Date(svc.date_time).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
