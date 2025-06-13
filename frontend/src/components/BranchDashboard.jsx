@@ -11,10 +11,12 @@ export default function BranchDashboard() {
 useEffect(() => {
   // Fetch stockin/stockout specific to this user
   axios.get(`/api/dashboard/branch-dashboard-role/${user.id}`)
-    .then(res => {
-      setStockinFromAdmin(res.data.stockinFromAdmin);
-      setStockoutFromUser(res.data.stockoutFromUser);
-    });
+  .then(res => {
+    const data = res.data || {};
+    setStockinFromAdmin(Array.isArray(data.stockinFromAdmin) ? data.stockinFromAdmin : []);
+    setStockoutFromUser(Array.isArray(data.stockoutFromUser) ? data.stockoutFromUser : []);
+  });
+
 
   // ✅ Fetch only clients assigned to this branch office user
   if (user.role === 'user') {
