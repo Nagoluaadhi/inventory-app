@@ -120,7 +120,7 @@ export default function Stockout() {
           user_id: user.id
         });
 
-        const res = await axios.post('/api/stockout', {
+        const res = await axios.post('http://localhost:3001/api/stockout', {
           ...form,
           barcode: code,
           qty: 1,
