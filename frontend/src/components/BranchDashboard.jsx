@@ -9,26 +9,33 @@ export default function BranchDashboard() {
   const user = JSON.parse(localStorage.getItem('user'));
 
 useEffect(() => {
-  // Fetch stockin/stockout specific to this user
-  axios.get(`/api/dashboard/branch-dashboard-role/${user.id}`)
-  .then(res => {
-    const data = res.data || {};
-    setStockinFromAdmin(Array.isArray(data.stockinFromAdmin) ? data.stockinFromAdmin : []);
-    setStockoutFromUser(Array.isArray(data.stockoutFromUser) ? data.stockoutFromUser : []);
-  });
+  if (!user || !user.id || !user.role) {
+    console.warn('🚫 No user found in localStorage');
+    return;
+  }
 
+  // ✅ Fetch stockin/stockout
+  axios.get(`/api/dashboard/branch-dashboard-role/${user.id}`)
+    .then(res => {
+      const data = res.data || {};
+      setStockinFromAdmin(Array.isArray(data.stockinFromAdmin) ? data.stockinFromAdmin : []);
+      setStockoutFromUser(Array.isArray(data.stockoutFromUser) ? data.stockoutFromUser : []);
+    });
 
-  // ✅ Fetch only clients assigned to this branch office user
-  if (user.role === 'user') {
-    axios.get(`/api/clients`, {
-      params: { userId: user.id, role: user.role }
-    })
-    .then(res => {
-      setClients(Array.isArray(res.data) ? res.data : []); // you'll need to define setClients and clients state
-    });
-  }
+  // ✅ Fetch assigned clients for 'user'
+  if (user.role === 'user') {
+    console.log('📦 Sending to /api/clients', { userId: user.id, role: user.role });
+    axios.get('/api/clients', {
+      params: { userId: user.id, role: user.role }
+    })
+    .then(res => {
+      setClients(Array.isArray(res.data) ? res.data : []);
+    })
+    .catch(err => {
+      console.error('❌ Error fetching clients:', err);
+    });
+  }
 }, []);
-
 
   return (
   <div>
