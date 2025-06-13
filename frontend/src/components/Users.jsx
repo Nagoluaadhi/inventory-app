@@ -30,8 +30,8 @@ export default function Users() {
         <input type="password" placeholder="Password" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} className="p-2 border rounded" />
         <select value={form.role} onChange={e => setForm({ ...form, role: e.target.value })} className="p-2 border rounded">
           <option value="admin">Admin</option>
-          <option value="branch office">Branch Office</option>
           <option value="user">User</option>
+          <option value="engineer">Engineer</option>
         </select>
         <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded col-span-3">Add User</button>
       </form>
