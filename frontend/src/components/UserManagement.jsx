@@ -26,9 +26,16 @@ export default function UserManagement() {
   };
 
   const loadClients = async () => {
-    const res = await axios.get('http://localhost:3001/api/clients');
-    setClients(res.data);
-  };
+  console.log('📤 Sending /api/clients with:', { userId: user?.id, role: user?.role });
+  const res = await axios.get('http://localhost:3001/api/clients', {
+    params: {
+      userId: user?.id,
+      role: user?.role
+    }
+  });
+  setClients(res.data);
+};
+
 
   useEffect(() => {
     loadUsers();
