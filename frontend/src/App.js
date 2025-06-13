@@ -55,6 +55,7 @@ function App() {
 
   {user?.role === 'engineer' && (
     <>
+      <Route path="stockin" element={<StockIn />} />
       <Route path="stockout" element={<Stockout />} />
       <Route path="services" element={<Services />} />
     </>
@@ -62,6 +63,7 @@ function App() {
 
   {user?.role === 'user' && (
     <>
+      <Route path="stockin" element={<StockIn />} />
       <Route path="stockout" element={<Stockout />} />
       <Route path="services" element={<Services />} />
     </>
