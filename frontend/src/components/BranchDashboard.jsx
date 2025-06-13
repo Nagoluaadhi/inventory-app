@@ -22,7 +22,7 @@ useEffect(() => {
       params: { userId: user.id, role: user.role }
     })
     .then(res => {
-      setClients(res.data); // you'll need to define setClients and clients state
+      setClients(Array.isArray(res.data) ? res.data : []); // you'll need to define setClients and clients state
     });
   }
 }, []);
@@ -36,7 +36,7 @@ useEffect(() => {
     <div className="mb-6 bg-white p-4 rounded shadow">
       <h3 className="text-lg font-semibold text-blue-700 mb-2">👥 Assigned Clients</h3>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {clients.map((client) => (
+        {Array.isArray(clients) && clients.map((client) => (
           <div
             key={client.id}
             className="border rounded p-3 shadow text-center"
