@@ -46,14 +46,11 @@ useEffect(() => {
       <h3 className="text-lg font-semibold text-blue-700 mb-2">👥 Assigned Clients</h3>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
         {Array.isArray(clients) && clients.map((client) => (
-          <div
-            key={client.id}
-            className="border rounded p-3 shadow text-center"
-          >
-            <p className="text-md font-medium">{client.client_name}</p>
-            <p className="text-sm text-gray-500">{client.address}</p>
-          </div>
-        ))}
+  <div key={client.id} className="border rounded p-3 shadow text-center">
+    <p className="text-md font-medium">{client.client_name}</p>
+    <p className="text-sm text-gray-500">Client ID: {client.id}</p> {/* Or any other valid field */}
+  </div>
+))}
       </div>
     </div>
 
