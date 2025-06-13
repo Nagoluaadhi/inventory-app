@@ -11,6 +11,8 @@ import Report from './components/Report';
 import LoginPage from './components/LoginPage';
 import UserManagement from './components/UserManagement';
 import Clients from './components/Clients';
+import Expensive from './components/Expensive';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -57,6 +59,7 @@ function App() {
     <>
       <Route path="stockin" element={<StockIn />} />
       <Route path="stockout" element={<Stockout />} />
+      <Route path="/expensive" element={<Expensive />} />
       <Route path="services" element={<Services />} />
     </>
   )}
