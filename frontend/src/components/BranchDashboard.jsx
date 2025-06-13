@@ -18,6 +18,7 @@ useEffect(() => {
   axios.get(`/api/dashboard/branch-dashboard-role/${user.id}`)
     .then(res => {
       const data = res.data || {};
+      console.log("✅ Received stockinFromAdmin:", data.stockinFromAdmin);
       setStockinFromAdmin(Array.isArray(data.stockinFromAdmin) ? data.stockinFromAdmin : []);
       setStockoutFromUser(Array.isArray(data.stockoutFromUser) ? data.stockoutFromUser : []);
     });
@@ -29,6 +30,7 @@ useEffect(() => {
       params: { userId: user.id, role: user.role }
     })
     .then(res => {
+      console.log("✅ Received clients:", res.data);
       setClients(Array.isArray(res.data) ? res.data : []);
     })
     .catch(err => {
