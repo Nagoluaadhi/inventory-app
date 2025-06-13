@@ -12,7 +12,7 @@ export default function LoginPage({ setUser }) {
     try {
       const payload = {
         ...form,
-        role: form.role.toLowerCase().replace('-', '_')
+        role: form.role.toLowerCase()
       };
 
       const res = await axios.post('http://localhost:3001/api/users/login', payload);
@@ -24,7 +24,7 @@ export default function LoginPage({ setUser }) {
       localStorage.setItem('user_id', user.id);
       localStorage.setItem('role', user.role);
 
-      if (user.role === 'branch-office') {
+      if (user.role === 'user') {
         localStorage.setItem('client_id', user.client_id); // optional
       }
 
@@ -75,8 +75,8 @@ export default function LoginPage({ setUser }) {
           >
             <option value="">Select Role</option>
             <option value="admin">Admin</option>
-            <option value="branch-office">Branch Office</option>
             <option value="user">User</option>
+            <option value="engineer">Engineer</option>
           </select>
           <button type="submit" className="w-full bg-orange-600 text-white p-2 rounded hover:bg-orange-700">
             Login
