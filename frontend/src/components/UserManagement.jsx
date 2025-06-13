@@ -339,7 +339,9 @@ export default function UserManagement() {
       <tr key={client.id}>
         <td className="border px-2 py-1">{client.id}</td>
         <td className="border px-2 py-1">{client.client_name}</td>
-        <td className="border px-2 py-1">{assignedUser?.username || '—'}</td>
+        <td className="border px-2 py-1">
+  {assignedUser ? assignedUser.username : `User ID: ${client.branch_user_id}`}
+</td>
         <td className="border px-2 py-1">
           <div className="flex justify-start">
             <button
