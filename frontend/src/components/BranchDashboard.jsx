@@ -58,7 +58,7 @@ useEffect(() => {
 
     {/* 🟩 StockIn from Admin */}
     <div className="mb-6">
-      <h3 className="text-lg font-semibold text-green-700 mb-2">🟩 StockIn from Admin</h3>
+      <h3 className="text-lg font-semibold text-green-700 mb-2">📦 Items Sent by Admin (Outward)</h3>
       <table className="w-full border text-sm mb-4">
         <thead className="bg-gray-100">
           <tr>
