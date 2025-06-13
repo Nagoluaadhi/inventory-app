@@ -17,7 +17,7 @@ useEffect(() => {
     });
 
   // ✅ Fetch only clients assigned to this branch office user
-  if (user.role === 'branch_office') {
+  if (user.role === 'user') {
     axios.get(`/api/clients`, {
       params: { userId: user.id, role: user.role }
     })
