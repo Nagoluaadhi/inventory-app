@@ -32,7 +32,6 @@ export default function AdminDashboard() {
             >
               <p className="text-lg font-bold text-gray-800">{item.item_name}</p>
               <p className="text-sm text-green-600">Total Added: {item.total_added}</p>
-              <p className="text-sm text-indigo-600">Stock In: {item.stockin}</p>
               <p className="text-sm text-red-600">Used: {item.used}</p>
               <p className="text-sm text-blue-600">Remaining: {item.balance}</p>
             </div>
