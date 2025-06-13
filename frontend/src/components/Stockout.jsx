@@ -182,7 +182,7 @@ export default function Stockout() {
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} min={user?.role === 'user' ? today : undefined} className="p-2 border rounded" />
+        <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} min={user?.role === 'engineer' ? today : undefined} className="p-2 border rounded" />
         <select value={form.inventory_id} onChange={(e) => setForm({ ...form, inventory_id: e.target.value })} className="p-2 border rounded">
           <option value="">Select Item</option>
           {inventory.map(item => <option key={item.id} value={item.id}>{item.item_name}</option>)}
