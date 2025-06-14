@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+const role = localStorage.getItem('role');
 
 function Layout({ user }) {
   return (
@@ -36,6 +37,11 @@ function Layout({ user }) {
       <Link to="/app/services" className="hover:text-orange-500">Services</Link>
     </>
   )}
+          
+{role !== 'engineer' && (
+  <Link to="/dashboard" className="nav-link">Dashboard</Link>
+)}
+
 </nav>
 
       </aside>
