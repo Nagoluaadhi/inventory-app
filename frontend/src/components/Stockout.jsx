@@ -31,11 +31,6 @@ export default function Stockout() {
   const today = new Date().toISOString().split('T')[0];
   const canStockOut = localStorage.getItem('can_stockout') === '1';
 
-if (!canStockOut) {
-  return <div className="p-4 text-red-600 font-bold">⛔ Access Denied: You do not have permission to access Stock Out.</div>;
-}
-
-// ✅ Only after access check, call useEffect
 useEffect(() => {
   loadDropdowns();
 }, []);
@@ -47,7 +42,9 @@ useEffect(() => {
 useEffect(() => {
   loadBalances();
 }, [form.inventory_id, form.client_id]);
-
+  if (!canStockOut) {
+    return <div className="p-4 text-red-600 font-bold">⛔ Access Denied: You do not have permission to access Stock Out.</div>;
+  }
   const loadDropdowns = async () => {
   const [invRes, cliRes, stockRes] = await Promise.all([
   axios.get('http://localhost:3001/api/inventory'),
