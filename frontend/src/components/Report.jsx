@@ -68,35 +68,48 @@ export default function Report() {
     <div>
       <h2 className="text-xl font-bold mb-4">Report</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-        <select onChange={e => setFilter({ ...filter, type: e.target.value })} className="p-2 border rounded">
-          <option value="">All Types</option>
-          <option value="in">Stock In</option>
-          <option value="out">Stock Out</option>
-        </select>
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-6">
+  <div className="col-span-1 md:col-span-1">
+    <select onChange={e => setFilter({ ...filter, type: e.target.value })} className="w-full p-2 border rounded">
+      <option value="">All Types</option>
+      <option value="in">Stock In</option>
+      <option value="out">Stock Out</option>
+    </select>
+  </div>
 
-        <select onChange={e => setFilter({ ...filter, client_id: e.target.value })} className="p-2 border rounded">
-          <option value="">All Clients</option>
-          {clients.length === 0
-            ? <option disabled>No clients available</option>
-            : clients.map(cli => <option key={cli.id} value={cli.id}>{cli.client_name}</option>)
-          }
-        </select>
+  <div className="col-span-1 md:col-span-1">
+    <select onChange={e => setFilter({ ...filter, client_id: e.target.value })} className="w-full p-2 border rounded">
+      <option value="">All Clients</option>
+      {clients.map(cli => (
+        <option key={cli.id} value={cli.id}>{cli.client_name}</option>
+      ))}
+    </select>
+  </div>
 
-        {role === 'admin' && (
-          <select onChange={e => setFilter({ ...filter, user_id: e.target.value })} className="p-2 border rounded">
-            <option value="">All Users</option>
-            {users.map(user => (
-              <option key={user.id} value={user.id}>{user.username}</option>
-            ))}
-          </select>
-        )}
+  {role === 'admin' && (
+    <div className="col-span-1 md:col-span-1">
+      <select onChange={e => setFilter({ ...filter, user_id: e.target.value })} className="w-full p-2 border rounded">
+        <option value="">All Users</option>
+        {users.map(user => (
+          <option key={user.id} value={user.id}>{user.username}</option>
+        ))}
+      </select>
+    </div>
+  )}
 
-        <input type="date" onChange={e => setFilter({ ...filter, from: e.target.value })} className="p-2 border rounded" />
-        <input type="date" onChange={e => setFilter({ ...filter, to: e.target.value })} className="p-2 border rounded" />
+  <div className="col-span-1 md:col-span-1">
+    <input type="date" onChange={e => setFilter({ ...filter, from: e.target.value })} className="w-full p-2 border rounded" />
+  </div>
 
-        <button onClick={loadReports} className="bg-blue-600 text-white px-4 py-2 rounded col-span-1 md:col-span-5">Filter</button>
-      </div>
+  <div className="col-span-1 md:col-span-1">
+    <input type="date" onChange={e => setFilter({ ...filter, to: e.target.value })} className="w-full p-2 border rounded" />
+  </div>
+
+  <div className="col-span-1 md:col-span-1 flex items-center">
+    <button onClick={loadReports} className="w-full bg-blue-600 text-white px-4 py-2 rounded">Filter</button>
+  </div>
+</div>
+
 
       <div className="flex gap-4 mb-4">
         <button onClick={() => exportToExcel(data, 'report')} className="bg-green-500 text-white px-4 py-1 rounded">Export Excel</button>
