@@ -209,7 +209,7 @@ export default function Stockout() {
           {scannerVisible && <BarcodeScanner onScan={handleScan} />}
         </div>
 
-        {userRole?.toLowerCase() !== 'user' && (
+        {userRole?.toLowerCase() !== 'engineer' && (
   <input
     type="text"
     placeholder="Invoice No"
