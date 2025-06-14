@@ -33,6 +33,15 @@ export default function Expensive() {
       setMessage('❌ Submission failed');
     }
   };
+const handleDelete = async (id) => {
+  try {
+    await axios.delete(`http://localhost:3001/api/expensive/delete/${id}`);
+    setMessage('🗑️ Expense deleted');
+    fetchRecords(); // refresh list
+  } catch (err) {
+    setMessage('❌ Delete failed');
+  }
+};
 
   const fetchRecords = async () => {
     const res = await axios.get(`http://localhost:3001/api/expensive/engineer/${user?.id}`);
@@ -69,19 +78,26 @@ export default function Expensive() {
 
       <h3 className="text-lg font-semibold mt-6 mb-2">Expense Records</h3>
       {records.map((r, i) => (
-        <div key={i} className="border p-2 mb-2">
-          <p>{r.from} → {r.to}</p>
-          <p>Transport: ₹{r.transport}, Food: ₹{r.food}, Days: {r.days}</p>
-          <p>Total: ₹{r.total_cost} | Paid: {r.paid}</p>
-          {(r.image_path || r.image_url) && (
-            <img
-              src={`http://localhost:3001${r.image_path || r.image_url}`}
-              alt="expense"
-              className="w-40 mt-2"
-            />
-          )}
-        </div>
-      ))}
+  <div key={i} className="border p-2 mb-2 relative">
+    <p>{r.from} → {r.to}</p>
+    <p>Transport: ₹{r.transport}, Food: ₹{r.food}, Days: {r.days}</p>
+    <p>Total: ₹{r.total_cost} | Paid: {r.paid}</p>
+    {(r.image_path || r.image_url) && (
+      <img
+        src={`http://localhost:3001${r.image_path || r.image_url}`}
+        alt="expense"
+        className="w-40 mt-2"
+      />
+    )}
+    <button
+      onClick={() => handleDelete(r.id)}
+      className="absolute top-2 right-2 text-red-600 bg-red-100 hover:bg-red-200 px-2 py-1 rounded text-sm"
+    >
+      Delete
+    </button>
+  </div>
+))}
+
     </div>
   );
 }
