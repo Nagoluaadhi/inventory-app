@@ -11,9 +11,18 @@ export default function Report() {
   const [users, setUsers] = useState([]);
   const role = localStorage.getItem('role');
   const loadClients = async () => {
-    const res = await axios.get('http://localhost:3001/api/clients');
-    setClients(res.data);
-  };
+  try {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const role = localStorage.getItem('role');
+    const res = await axios.get('http://localhost:3001/api/clients', {
+      params: { userId: user.id, role }
+    });
+    setClients(res.data);
+  } catch (err) {
+    console.error('Error loading clients:', err.message);
+  }
+};
+
 const loadUsers = async () => {
     const res = await axios.get('http://localhost:3001/api/users'); // 🔁 You must ensure this endpoint returns all users
     setUsers(res.data);
