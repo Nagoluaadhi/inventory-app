@@ -18,7 +18,7 @@ export default function Stockout() {
 
   const user = JSON.parse(localStorage.getItem('user'));
   const userRole = localStorage.getItem('role');
-  const canStockOut = role === 'admin' || localStorage.getItem('can_stockout') === '1';
+  const canStockOut = userRole === 'admin' || localStorage.getItem('can_stockout') === '1';
 
   const [inventory, setInventory] = useState([]);
   const [clients, setClients] = useState([]);
