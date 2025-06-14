@@ -26,7 +26,7 @@ export default function StockIn() {
   const [barcodes, setBarcodes] = useState([]);
   const barcodeRefs = useRef([]);
   const scanRef = useRef(null);
-  const canStockIn = role === 'admin' || localStorage.getItem('can_stockin') === '1';
+  const canStockIn = userRole === 'admin' || localStorage.getItem('can_stockin') === '1';
 
   const loadDropdowns = async () => {
     try {
