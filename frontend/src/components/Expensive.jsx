@@ -80,16 +80,16 @@ export default function Expensive() {
       <h3 className="text-lg font-semibold mt-6 mb-2">Expense Records</h3>
       {records.map((r, i) => (
         <div key={i} className="border p-2 mb-2">
-          <p>{r.from_place} → {r.to_place}</p>
+          <p>{r.from} → {r.to}</p>
           <p>Transport: ₹{r.transport}, Food: ₹{r.food}, Days: {r.days}</p>
           <p>Total: ₹{r.total_cost} | Paid: {r.paid}</p>
-          {r.image_path && (
-            <img
-              src={`http://localhost:3001${r.image_path}`}
-              alt="expense"
-              className="w-40 mt-2"
-            />
-          )}
+          {(r.image_path || r.image_url) && (
+  <img
+    src={`http://localhost:3001${r.image_path || r.image_url}`}
+    alt="expense"
+    className="w-40 mt-2"
+  />
+)}
         </div>
       ))}
     </div>
