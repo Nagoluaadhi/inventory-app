@@ -32,7 +32,7 @@ const handleLogin = async (e) => {
 
     // 👇 Role-based redirection
     if (user.role === 'engineer') {
-      navigate('/stockin');
+      navigate('app/stockin');
     } else {
       navigate('/app/dashboard');
     }
