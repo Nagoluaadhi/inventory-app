@@ -66,6 +66,19 @@ export default function Expensive() {
     setMessage('❌ Upload failed');
   }
 };
+const handleDeleteImage = async () => {
+  try {
+    const relativePath = imageUrl.replace('http://localhost:3001/', '');
+    await axios.delete('http://localhost:3001/api/expensive/delete-image', {
+      data: { imagePath: relativePath }
+    });
+    setImageUrl('');
+    setMessage('🗑️ Image deleted!');
+  } catch (err) {
+    setMessage('❌ Failed to delete image');
+    console.error(err);
+  }
+};
 
   const loadRecords = async () => {
     try {
@@ -111,10 +124,16 @@ export default function Expensive() {
       {message && <p className="mt-4">{message}</p>}
 {imageUrl && (
   <div className="mt-4">
-    <h4 className="font-semibold">📷 Preview</h4>
-    <img src={imageUrl} alt="Uploaded" className="max-w-sm border rounded" />
+    <h4 className="font-semibold mb-2">📷 Uploaded Preview</h4>
+    <img src={imageUrl} alt="Expense" className="max-w-sm border rounded mb-2" />
+    <div>
+      <button onClick={handleDeleteImage} className="bg-red-600 text-white px-4 py-1 rounded">
+        Delete Image
+      </button>
+    </div>
   </div>
 )}
+
       <h3 className="text-lg font-semibold mt-6">🧾 Expense Records</h3>
       <table className="w-full border text-sm">
         <thead className="bg-gray-100">
