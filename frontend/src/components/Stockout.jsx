@@ -44,15 +44,21 @@ export default function Stockout() {
 
   const loadDropdowns = async () => {
   const [invRes, cliRes, stockRes] = await Promise.all([
-    axios.get('http://localhost:3001/api/inventory'),
-    axios.get('http://localhost:3001/api/clients'),
-    axios.get('http://localhost:3001/api/stockout', {
-      params: {
-        user_id: user.id,
-        role: user.role
-      }
-    })
-  ]);
+  axios.get('http://localhost:3001/api/inventory'),
+  axios.get('http://localhost:3001/api/clients', {
+    params: {
+      userId: user.id, // ✅ correct param name
+      role: user.role
+    }
+  }),
+  axios.get('http://localhost:3001/api/stockout', {
+    params: {
+      userId: user.id, // ✅ correct param name
+      role: user.role
+    }
+  })
+]);
+
   setInventory(invRes.data);
   setClients(cliRes.data);
   setData(stockRes.data);
