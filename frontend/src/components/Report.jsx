@@ -69,10 +69,14 @@ const loadUsers = async () => {
           {clients.map(cli => <option key={cli.id} value={cli.id}>{cli.client_name}</option>)}
         </select>
         {role === 'admin' && (
-  <select onChange={e => setFilter({ ...filter, user_id: e.target.value })} className="p-2 border rounded">
-    <option value="">All Users</option>
-    {users.map(user => <option key={user.id} value={user.id}>{user.username}</option>)}
-  </select>
+  <select onChange={e => setFilter({ ...filter, client_id: e.target.value })} className="p-2 border rounded">
+  <option value="">All Clients</option>
+  {clients.length === 0
+    ? <option disabled>No clients available</option>
+    : clients.map(cli => <option key={cli.id} value={cli.id}>{cli.client_name}</option>)
+  }
+</select>
+
 )}
 
         <input type="date" onChange={e => setFilter({ ...filter, from: e.target.value })} className="p-2 border rounded" />
