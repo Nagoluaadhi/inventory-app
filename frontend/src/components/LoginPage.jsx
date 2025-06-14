@@ -7,34 +7,42 @@ export default function LoginPage({ setUser }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const payload = {
-        ...form,
-        role: form.role.toLowerCase()
-      };
+const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const payload = {
+      ...form,
+      role: form.role.toLowerCase()
+    };
 
-      const res = await axios.post('http://localhost:3001/api/users/login', payload);
-      const user = res.data;
+    const res = await axios.post('http://localhost:3001/api/users/login', payload);
+    const user = res.data;
 
-      console.log('✅ Login success:', user);
+    console.log('✅ Login success:', user);
 
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('user_id', user.id);
-      localStorage.setItem('role', user.role);
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user_id', user.id);
+    localStorage.setItem('role', user.role);
 
-      if (user.role === 'user') {
-        localStorage.setItem('client_id', user.client_id); // optional
-      }
+    if (user.role === 'user') {
+      localStorage.setItem('client_id', user.client_id); // optional
+    }
 
-      setUser(user); // ⬅️ from App.js
-      navigate('/app/dashboard');
-    } catch (err) {
-      console.error('❌ Login error:', err);
-      setError(err.response?.data?.error || 'Login failed');
-    }
-  };
+    setUser(user);
+
+    // 👇 Role-based redirection
+    if (user.role === 'engineer') {
+      navigate('/stockin');
+    } else {
+      navigate('/app/dashboard');
+    }
+
+  } catch (err) {
+    console.error('❌ Login error:', err);
+    setError(err.response?.data?.error || 'Login failed');
+  }
+};
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
