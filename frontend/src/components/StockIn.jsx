@@ -28,10 +28,6 @@ export default function StockIn() {
   const scanRef = useRef(null);
   const canStockIn = localStorage.getItem('can_stockin') === '1'; // ✅ Moved to top
 
-  if (!canStockIn) {
-    return <div className="p-4 text-red-600 font-bold">⛔ Access Denied: You do not have permission to access Stock In.</div>;
-  }
-
   const loadDropdowns = async () => {
     try {
       const [invRes, cliRes, stockRes] = await Promise.all([
@@ -46,7 +42,9 @@ export default function StockIn() {
       console.error('Dropdown loading failed:', err);
     }
   };
-
+if (!canStockIn) {
+    return <div className="p-4 text-red-600 font-bold">⛔ Access Denied: You do not have permission to access Stock In.</div>;
+  }
   useEffect(() => {
     loadDropdowns();
     scanRef.current?.focus();
