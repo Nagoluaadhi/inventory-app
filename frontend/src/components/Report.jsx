@@ -97,7 +97,7 @@ export default function Report() {
 
   <button onClick={loadReports} className="bg-blue-600 text-white px-4 py-2 rounded">Filter</button>
 </div>
-
+</div>
 
       <div className="flex gap-4 mb-4">
         <button onClick={() => exportToExcel(data, 'report')} className="bg-green-500 text-white px-4 py-1 rounded">Export Excel</button>
