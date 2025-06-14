@@ -23,6 +23,8 @@ const handleLogin = async (e) => {
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('user_id', user.id);
     localStorage.setItem('role', user.role);
+    localStorage.setItem('can_stockin', user.can_stockin);
+    localStorage.setItem('can_stockout', user.can_stockout);
 
     if (user.role === 'user') {
       localStorage.setItem('client_id', user.client_id); // optional
