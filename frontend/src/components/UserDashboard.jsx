@@ -6,12 +6,22 @@ export default function UserDashboard() {
   const [services, setServices] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
 
-  useEffect(() => {
-    axios.get(`/api/stockout?role=user&username=${user.username}`)
-      .then(res => setStockouts(Array.isArray(res.data) ? res.data : []));
-    axios.get(`/api/services?role=user&username=${user.username}`)
-      .then(res => setServices(Array.isArray(res.data) ? res.data : []));
-  }, []);
+ useEffect(() => {
+  axios.get(`http://localhost:3001/api/stockout`, {
+    params: {
+      userId: user.id,  // ✅ use userId as expected by backend
+      role: 'user'
+    }
+  }).then(res => setStockouts(Array.isArray(res.data) ? res.data : []));
+
+  axios.get(`http://localhost:3001/api/services`, {
+    params: {
+      userId: user.id,  // ✅ use userId as expected by backend
+      role: 'user'
+    }
+  }).then(res => setServices(Array.isArray(res.data) ? res.data : []));
+}, []);
+
 
   return (
     <div>
