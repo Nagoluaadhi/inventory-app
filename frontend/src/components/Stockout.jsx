@@ -49,8 +49,7 @@ export default function Stockout() {
     axios.get('http://localhost:3001/api/stockout', {
       params: {
         user_id: user.id,
-        role: userRole,
-        username: user?.username
+        role: user.role
       }
     })
   ]);
