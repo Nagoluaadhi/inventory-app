@@ -6,6 +6,9 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 export default function StockIn() {
+  if (!canStockIn) {
+  return <div className="p-4 text-red-600 font-bold">⛔ Access Denied: You do not have permission to access Stock In.</div>;
+}
   const [form, setForm] = useState({
     date: '',
     inventory_id: '',
@@ -25,6 +28,7 @@ export default function StockIn() {
   const [barcodes, setBarcodes] = useState([]);
   const barcodeRefs = useRef([]);
   const scanRef = useRef(null);
+  const canStockIn = localStorage.getItem('can_stockin') === '1';
 
   const loadDropdowns = async () => {
     try {
