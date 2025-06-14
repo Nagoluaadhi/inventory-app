@@ -42,14 +42,13 @@ export default function StockIn() {
       console.error('Dropdown loading failed:', err);
     }
   };
-if (!canStockIn) {
-    return <div className="p-4 text-red-600 font-bold">⛔ Access Denied: You do not have permission to access Stock In.</div>;
-  }
   useEffect(() => {
     loadDropdowns();
     scanRef.current?.focus();
   }, []);
-
+if (!canStockIn) {
+    return <div className="p-4 text-red-600 font-bold">⛔ Access Denied: You do not have permission to access Stock In.</div>;
+  }
   const handleScan = (value) => {
     const qty = parseInt(form.qty || '1');
     if (isNaN(qty) || qty < 1) {
