@@ -129,7 +129,7 @@ export default function Report() {
               data.map((row, i) => (
                 <tr key={row.id}>
                   <td className="border px-2">{i + 1}</td>
-                  <td className="border px-2">{row.transaction_type}</td>
+                  <td className="border px-2">{row.type}</td>
                   <td className="border px-2">{row.client_name}</td>
                   <td className="border px-2">{row.item_name}</td>
                   <td className="border px-2">{row.qty}</td>
