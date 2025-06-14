@@ -77,26 +77,56 @@ const handleDelete = async (id) => {
       {message && <p className="mt-2 text-green-600">{message}</p>}
 
       <h3 className="text-lg font-semibold mt-6 mb-2">Expense Records</h3>
-      {records.map((r, i) => (
-  <div key={i} className="border p-2 mb-2 relative">
-    <p>{r.from} → {r.to}</p>
-    <p>Transport: ₹{r.transport}, Food: ₹{r.food}, Days: {r.days}</p>
-    <p>Total: ₹{r.total_cost} | Paid: {r.paid}</p>
-    {(r.image_path || r.image_url) && (
-      <img
-        src={`http://localhost:3001${r.image_path || r.image_url}`}
-        alt="expense"
-        className="w-40 mt-2"
-      />
-    )}
-    <button
-      onClick={() => handleDelete(r.id)}
-      className="absolute top-2 right-2 text-red-600 bg-red-100 hover:bg-red-200 px-2 py-1 rounded text-sm"
-    >
-      Delete
-    </button>
-  </div>
-))}
+      <table className="w-full border text-sm mt-4">
+  <thead className="bg-gray-100">
+    <tr>
+      <th className="border px-2 py-1">From</th>
+      <th className="border px-2 py-1">To</th>
+      <th className="border px-2 py-1">Transport (₹)</th>
+      <th className="border px-2 py-1">Accommodation (₹/Night)</th>
+      <th className="border px-2 py-1">Food (₹/Day)</th>
+      <th className="border px-2 py-1">Days</th>
+      <th className="border px-2 py-1">Total Cost (₹)</th>
+      <th className="border px-2 py-1">Paid?</th>
+      <th className="border px-2 py-1">Remarks</th>
+      <th className="border px-2 py-1">Image</th>
+      <th className="border px-2 py-1">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {records.map((r, i) => (
+      <tr key={i} className="text-center">
+        <td className="border px-2">{r.from}</td>
+        <td className="border px-2">{r.to}</td>
+        <td className="border px-2">₹{r.transport}</td>
+        <td className="border px-2">₹{r.accommodation}</td>
+        <td className="border px-2">₹{r.food}</td>
+        <td className="border px-2">{r.days}</td>
+        <td className="border px-2 font-semibold">₹{r.total_cost}</td>
+        <td className="border px-2">{r.paid}</td>
+        <td className="border px-2">{r.remarks}</td>
+        <td className="border px-2">
+          {(r.image_path || r.image_url) && (
+            <img
+              src={`http://localhost:3001${r.image_path || r.image_url}`}
+              alt="expense"
+              className="w-16 h-auto mx-auto"
+            />
+          )}
+        </td>
+        <td className="border px-2">
+          <button
+            onClick={() => handleDelete(r.id)}
+            className="text-red-600 hover:underline"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
 
     </div>
   );
