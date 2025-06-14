@@ -1,24 +1,14 @@
-// Expensive.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function Expensive() {
-  const [file, setFile] = useState(null);
-  const [message, setMessage] = useState('');
-  const [records, setRecords] = useState([]);
-  const [imageUrl, setImageUrl] = useState('');
-  const user = JSON.parse(localStorage.getItem('user'));
-
   const [form, setForm] = useState({
-    from: '',
-    to: '',
-    transport: '',
-    accommodation: '',
-    food: '',
-    days: '',
-    paid: 'N',
-    remarks: ''
+    from: '', to: '', transport: '', accommodation: '', food: '', days: '', paid: 'N', remarks: ''
   });
+  const [file, setFile] = useState(null);
+  const [records, setRecords] = useState([]);
+  const [message, setMessage] = useState('');
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const calculateTotal = () => {
     const t = parseFloat(form.transport) || 0;
@@ -27,144 +17,63 @@ export default function Expensive() {
     return t + a + f;
   };
 
-  const handleFormChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const total_cost = calculateTotal();
+    const formData = new FormData();
+    Object.keys(form).forEach(key => formData.append(key, form[key]));
+    formData.append('user_id', user?.id);
+    if (file) formData.append('image', file);
+
     try {
-      await axios.post('http://localhost:3001/api/expensive/manual', {
-        ...form,
-        total_cost,
-        engineer_id: user?.id || 0
-      });
-      alert('✅ Expense saved!');
-      setForm({ from: '', to: '', transport: '', accommodation: '', food: '', days: '', paid: 'N', remarks: '' });
-      loadRecords();
+      await axios.post('http://localhost:3001/api/expensive/add', formData);
+      setMessage('Expense submitted!');
+      fetchRecords();
     } catch (err) {
-      alert('❌ Failed to save expense');
-      console.error(err);
+      setMessage('Error submitting expense');
     }
   };
 
- const handleUpload = async (e) => {
-  e.preventDefault();
-  const formData = new FormData();
-  formData.append('photo', file);
-
-  try {
-    const res = await axios.post('http://localhost:3001/api/expensive/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-    const fullUrl = `http://localhost:3001/${res.data.path.replace(/\\/g, '/')}`;
-    setImageUrl(fullUrl);
-    setMessage('✅ Upload successful!');
-  } catch (err) {
-    setMessage('❌ Upload failed');
-  }
-};
-const handleDeleteImage = async () => {
-  try {
-    const relativePath = imageUrl.replace('http://localhost:3001/', '');
-    await axios.delete('http://localhost:3001/api/expensive/delete-image', {
-      data: { imagePath: relativePath }
-    });
-    setImageUrl('');
-    setMessage('🗑️ Image deleted!');
-  } catch (err) {
-    setMessage('❌ Failed to delete image');
-    console.error(err);
-  }
-};
-
-  const loadRecords = async () => {
-    try {
-      const res = await axios.get(`http://localhost:3001/api/expensive/engineer/${user?.id}`);
-      setRecords(res.data);
-    } catch (err) {
-      console.error(err);
-    }
+  const fetchRecords = async () => {
+    const res = await axios.get(`http://localhost:3001/api/expensive/all/${user?.id}`);
+    setRecords(res.data);
   };
 
   useEffect(() => {
-    loadRecords();
+    fetchRecords();
   }, []);
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">🧾 Engineer Expenses</h2>
-
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <input name="from" value={form.from} onChange={handleFormChange} placeholder="From" className="p-2 border rounded" />
-        <input name="to" value={form.to} onChange={handleFormChange} placeholder="To" className="p-2 border rounded" />
-        <input name="transport" type="number" value={form.transport} onChange={handleFormChange} placeholder="Transport (₹)" className="p-2 border rounded" />
-        <input name="accommodation" type="number" value={form.accommodation} onChange={handleFormChange} placeholder="Accommodation (₹/Night)" className="p-2 border rounded" />
-        <input name="food" type="number" value={form.food} onChange={handleFormChange} placeholder="Food (₹/Day)" className="p-2 border rounded" />
-        <input name="days" type="number" value={form.days} onChange={handleFormChange} placeholder="Days" className="p-2 border rounded" />
-        <input value={`₹ ${calculateTotal().toFixed(2)}`} disabled className="p-2 border rounded bg-gray-100 font-bold" />
-        <select name="paid" value={form.paid} onChange={handleFormChange} className="p-2 border rounded">
-          <option value="N">Paid?</option>
-          <option value="Y">Yes</option>
-          <option value="N">No</option>
+      <h2 className="text-xl font-bold mb-4">Expense Form</h2>
+      <form onSubmit={handleSubmit} className="space-y-3">
+        {['from', 'to', 'transport', 'accommodation', 'food', 'days', 'remarks'].map((field) => (
+          <input key={field} name={field} value={form[field]} onChange={handleChange}
+            placeholder={field} className="border p-2 w-full" />
+        ))}
+        <select name="paid" value={form.paid} onChange={handleChange} className="border p-2 w-full">
+          <option value="N">Not Paid</option>
+          <option value="Y">Paid</option>
         </select>
-        <input name="remarks" value={form.remarks} onChange={handleFormChange} placeholder="Remarks" className="p-2 border rounded" />
-        <div className="md:col-span-3 flex justify-end">
-          <button type="submit" className="bg-green-600 text-white px-6 py-2 rounded">Save</button>
+        <input type="file" onChange={e => setFile(e.target.files[0])} className="border p-2 w-full" />
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
+      </form>
+      {message && <p className="mt-2 text-green-600">{message}</p>}
+
+      <h3 className="text-lg font-semibold mt-6 mb-2">Expense Records</h3>
+      {records.map((rec, i) => (
+        <div key={i} className="border p-2 mb-2">
+          <p>{rec.from_place} → {rec.to_place}</p>
+          <p>Transport: ₹{rec.transport}, Food: ₹{rec.food}, Days: {rec.days}</p>
+          {rec.image_url && (
+            <img src={`http://localhost:3001${rec.image_url}`} alt="Expense" className="w-40 mt-2" />
+          )}
         </div>
-      </form>
-
-      <h3 className="text-lg font-semibold mb-2">📸 Upload Expense Image</h3>
-      <form onSubmit={handleUpload} className="space-y-4">
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} accept="image/*" required />
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Upload</button>
-      </form>
-      {message && <p className="mt-4">{message}</p>}
-{imageUrl && (
-  <div className="mt-4">
-    <h4 className="font-semibold mb-2">📷 Uploaded Preview</h4>
-    <img src={imageUrl} alt="Expense" className="max-w-sm border rounded mb-2" />
-    <div>
-      <button onClick={handleDeleteImage} className="bg-red-600 text-white px-4 py-1 rounded">
-        Delete Image
-      </button>
-    </div>
-  </div>
-)}
-
-      <h3 className="text-lg font-semibold mt-6">🧾 Expense Records</h3>
-      <table className="w-full border text-sm">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="border px-2">From</th>
-            <th className="border px-2">To</th>
-            <th className="border px-2">Transport</th>
-            <th className="border px-2">Accommodation</th>
-            <th className="border px-2">Food</th>
-            <th className="border px-2">Days</th>
-            <th className="border px-2">Total (₹)</th>
-            <th className="border px-2">Paid</th>
-            <th className="border px-2">Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-          {records.map((r, i) => (
-            <tr key={i}>
-              <td className="border px-2">{r.from}</td>
-              <td className="border px-2">{r.to}</td>
-              <td className="border px-2">{r.transport}</td>
-              <td className="border px-2">{r.accommodation}</td>
-              <td className="border px-2">{r.food}</td>
-              <td className="border px-2">{r.days}</td>
-              <td className="border px-2">{r.total_cost}</td>
-              <td className="border px-2">{r.paid}</td>
-              <td className="border px-2">{r.remarks}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      ))}
     </div>
   );
 }
