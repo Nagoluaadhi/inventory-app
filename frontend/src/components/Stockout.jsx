@@ -6,10 +6,6 @@ import html2canvas from 'html2canvas';
 import BarcodeScanner from './BarcodeScanner';
 
 export default function Stockout() {
-  if (!canStockOut) {
-  return <div className="p-4 text-red-600 font-bold">⛔ Access Denied: You do not have permission to access Stock Out.</div>;
-}
-
   const [form, setForm] = useState({
     date: '',
     inventory_id: '',
@@ -37,6 +33,9 @@ export default function Stockout() {
   useEffect(() => {
     loadDropdowns();
   }, []);
+if (!canStockOut) {
+  return <div className="p-4 text-red-600 font-bold">⛔ Access Denied: You do not have permission to access Stock Out.</div>;
+}
 
   useEffect(() => {
     setForm(prev => ({ ...prev, date: today }));
