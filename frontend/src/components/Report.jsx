@@ -19,20 +19,18 @@ const loadUsers = async () => {
     setUsers(res.data);
   };
  const loadReports = async () => {
-  const localUser = JSON.parse(localStorage.getItem('user'));
-  const finalUserId = filter.user_id || localUser.id;
+  try {
+    const localUser = JSON.parse(localStorage.getItem('user'));
+    const finalUserId = filter.user_id || localUser.id;
 
-  const res = await axios.get('http://localhost:3001/api/report', {
-    params: { ...filter, user_id: finalUserId }
-  });
-  setData(res.data);
+    const res = await axios.get('http://localhost:3001/api/report', {
+      params: { ...filter, user_id: finalUserId }
+    });
+    setData(res.data);
+  } catch (err) {
+    console.error("❌ Error loading reports:", err.response?.data || err.message);
+  }
 };
-
-  useEffect(() => {
-    loadClients();
-    loadUsers();
-    loadReports();
-  }, []);
 
   const exportPDF = () => {
     const input = document.getElementById('report-table');
