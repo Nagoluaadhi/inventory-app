@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import AdminDashboard from './components/AdminDashboard';
-import UserDashboard from './components/UserDashboard';
 import BranchDashboard from './components/BranchDashboard';
 import StockIn from './components/StockIn';
 import Stockout from './components/Stockout';
@@ -39,7 +38,6 @@ function App() {
 >
   <Route path="dashboard" element={
     user?.role === 'admin' ? <AdminDashboard /> :
-    user?.role === 'engineer' ? <UserDashboard /> :
     user?.role === 'user' ? <BranchDashboard /> :
     <div>Unauthorized</div>
   } />
