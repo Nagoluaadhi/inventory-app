@@ -19,10 +19,13 @@ const loadUsers = async () => {
     setUsers(res.data);
   };
  const loadReports = async () => {
-  const res = await axios.get('http://localhost:3001/api/report', {
-    params: { ...filter, user_id: JSON.parse(localStorage.getItem('user')).id } // ✅ include user_id
-  });
-  setData(res.data);
+  const localUser = JSON.parse(localStorage.getItem('user'));
+  const finalUserId = filter.user_id || localUser.id;
+
+  const res = await axios.get('http://localhost:3001/api/report', {
+    params: { ...filter, user_id: finalUserId }
+  });
+  setData(res.data);
 };
 
   useEffect(() => {
