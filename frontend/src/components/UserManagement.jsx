@@ -81,6 +81,18 @@ export default function UserManagement() {
     });
     loadClients();
   };
+const updatePermission = async (userId, field, value) => {
+  try {
+    await axios.post('http://localhost:3001/api/users/update-permissions', {
+      userId,
+      field,
+      value
+    });
+    loadUsers(); // refresh user list
+  } catch (err) {
+    alert('Failed to update permission');
+  }
+};
 
   const deleteUser = async (id) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
@@ -199,26 +211,53 @@ export default function UserManagement() {
       <h3 className="text-md font-semibold mb-2">Users</h3>
       <table className="w-full text-sm border mb-8">
         <thead className="bg-gray-100">
-          <tr>
-            <th className="border px-2 py-1">ID</th>
-            <th className="border px-2 py-1">Username</th>
-            <th className="border px-2 py-1">Password</th>
-            <th className="border px-2 py-1">Role</th>
-            <th className="border px-2 py-1">Action</th>
-          </tr>
-        </thead>
+  <tr>
+    <th className="border px-2 py-1">ID</th>
+    <th className="border px-2 py-1">Username</th>
+    <th className="border px-2 py-1">Password</th>
+    <th className="border px-2 py-1">Role</th>
+    <th className="border px-2 py-1">StockIn</th>
+    <th className="border px-2 py-1">StockOut</th>
+    <th className="border px-2 py-1">Action</th>
+  </tr>
+</thead>
+
         <tbody>
           {users.map(user => (
-            <tr key={user.id}>
-              <td className="border px-2 py-1">{user.id}</td>
-              <td className="border px-2 py-1">{user.username}</td>
-              <td className="border px-2 py-1">{user.password}</td>
-              <td className="border px-2 py-1">{user.role}</td>
-              <td className="border px-2 py-1">
-                <button onClick={() => deleteUser(user.id)} className="bg-red-600 text-white px-2 py-1 text-xs rounded">Delete</button>
-              </td>
-            </tr>
-          ))}
+  <tr key={user.id}>
+    <td className="border px-2 py-1">{user.id}</td>
+    <td className="border px-2 py-1">{user.username}</td>
+    <td className="border px-2 py-1">{user.password}</td>
+    <td className="border px-2 py-1">{user.role}</td>
+    <td className="border px-2 py-1 text-center">
+      <input
+        type="checkbox"
+        checked={user.can_stockin}
+        onChange={() =>
+          updatePermission(user.id, 'can_stockin', user.can_stockin ? 0 : 1)
+        }
+      />
+    </td>
+    <td className="border px-2 py-1 text-center">
+      <input
+        type="checkbox"
+        checked={user.can_stockout}
+        onChange={() =>
+          updatePermission(user.id, 'can_stockout', user.can_stockout ? 0 : 1)
+        }
+      />
+    </td>
+    <td className="border px-2 py-1">
+      <button
+        onClick={() => deleteUser(user.id)}
+        className="bg-red-600 text-white px-2 py-1 text-xs rounded"
+      >
+        Delete
+      </button>
+    </td>
+  </tr>
+))}
+
         </tbody>
       </table>
 
