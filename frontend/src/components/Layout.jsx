@@ -37,10 +37,7 @@ function Layout({ user }) {
       <Link to="/app/services" className="hover:text-orange-500">Services</Link>
     </>
   )}
-          
-{role !== 'engineer' && (
-  <Link to="/dashboard" className="nav-link">Dashboard</Link>
-)}
+
 
 </nav>
 
