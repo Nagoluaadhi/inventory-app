@@ -11,13 +11,6 @@ export default function Expensive() {
   const [message, setMessage] = useState('');
   const [records, setRecords] = useState([]);
 
-  const calculateTotal = () => {
-    const t = parseFloat(form.transport) || 0;
-    const a = (parseFloat(form.accommodation) || 0) * (parseInt(form.days) || 0);
-    const f = (parseFloat(form.food) || 0) * (parseInt(form.days) || 0);
-    return t + a + f;
-  };
-
   const handleChange = e => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
@@ -25,14 +18,11 @@ export default function Expensive() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const total_cost = calculateTotal();
     const formData = new FormData();
-
     Object.entries(form).forEach(([key, value]) => {
       formData.append(key, value);
     });
     formData.append('engineer_id', user?.id);
-    formData.append('total_cost', total_cost);
     if (file) formData.append('image', file);
 
     try {
@@ -84,12 +74,12 @@ export default function Expensive() {
           <p>Transport: ₹{r.transport}, Food: ₹{r.food}, Days: {r.days}</p>
           <p>Total: ₹{r.total_cost} | Paid: {r.paid}</p>
           {(r.image_path || r.image_url) && (
-  <img
-    src={`http://localhost:3001${r.image_path || r.image_url}`}
-    alt="expense"
-    className="w-40 mt-2"
-  />
-)}
+            <img
+              src={`http://localhost:3001${r.image_path || r.image_url}`}
+              alt="expense"
+              className="w-40 mt-2"
+            />
+          )}
         </div>
       ))}
     </div>
