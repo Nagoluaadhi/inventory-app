@@ -6,6 +6,7 @@ export default function Expensive() {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
   const [records, setRecords] = useState([]);
+  const [imageUrl, setImageUrl] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
 
   const [form, setForm] = useState({
@@ -49,20 +50,22 @@ export default function Expensive() {
     }
   };
 
-  const handleUpload = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('photo', file);
+ const handleUpload = async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append('photo', file);
 
-    try {
-      await axios.post('http://localhost:3001/api/expensive/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      setMessage('✅ Upload successful!');
-    } catch (err) {
-      setMessage('❌ Upload failed');
-    }
-  };
+  try {
+    const res = await axios.post('http://localhost:3001/api/expensive/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    const fullUrl = `http://localhost:3001/${res.data.path.replace(/\\/g, '/')}`;
+    setImageUrl(fullUrl);
+    setMessage('✅ Upload successful!');
+  } catch (err) {
+    setMessage('❌ Upload failed');
+  }
+};
 
   const loadRecords = async () => {
     try {
@@ -106,7 +109,12 @@ export default function Expensive() {
         <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Upload</button>
       </form>
       {message && <p className="mt-4">{message}</p>}
-
+{imageUrl && (
+  <div className="mt-4">
+    <h4 className="font-semibold">📷 Preview</h4>
+    <img src={imageUrl} alt="Uploaded" className="max-w-sm border rounded" />
+  </div>
+)}
       <h3 className="text-lg font-semibold mt-6">🧾 Expense Records</h3>
       <table className="w-full border text-sm">
         <thead className="bg-gray-100">
