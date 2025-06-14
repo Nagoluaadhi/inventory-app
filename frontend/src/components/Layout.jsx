@@ -30,7 +30,6 @@ function Layout({ user }) {
 
   {user?.role === 'engineer' && (
     <>
-      <Link to="/app/dashboard" className="hover:text-orange-500">Dashboard</Link>
       <Link to="/app/stockin" className="hover:text-orange-500">Stock IN</Link>
       <Link to="/app/stockout" className="hover:text-orange-500">Outward</Link>
       <Link to="/app/expensive" className="hover:text-orange-500">Expensive</Link>
