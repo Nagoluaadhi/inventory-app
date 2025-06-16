@@ -6,7 +6,7 @@ function Layout({ user }) {
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 bg-white border-r p-4">
-        <div className="text-orange-500 text-lg font-bold mb-6">📦 Barcode System</div>
+        <div className="text-orange-500 text-lg font-bold mb-6">📦 Inventery Management System</div>
         <nav className="flex flex-col gap-3 text-sm">
   {user?.role === 'admin' && (
     <>
